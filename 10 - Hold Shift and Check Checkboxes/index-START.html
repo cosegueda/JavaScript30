@@ -99,6 +99,53 @@
   </div>
 
 <script>
+  const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
+
+  let lastChecked;
+
+  function handleCheck(e) {
+      let inBetween = false;
+      if (e.shiftKey && this.checked) {
+          checkboxes.forEach(checkbox => {
+              console.log(checkbox);
+              if (checkbox === this || checkbox === lastChecked) {
+                  inBetween = !inBetween;
+                  console.log('Checking inbetween');
+              }
+
+              if (inBetween) {
+                  checkbox.checked = true;
+              }
+          })
+      }
+
+      lastChecked = this;
+  }
+
+  checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+
+  // First attempt without tutorial
+  // const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]'));
+  // let lastChecked;
+  //
+  // function addCheckmark(e) {
+  //     if (!lastChecked) {
+  //         console.log(this);
+  //         return lastChecked = this;
+  //     }
+  //
+  //     if (e.shiftKey) {
+  //         let start = checkboxes[this];
+  //         let end = checkboxes[lastChecked];
+  //
+  //         console.log(checkboxes[this]);
+  //         console.log(checkboxes[lastChecked]);
+  //
+  //         checkboxes.slice(Math.min(start, end), Math.max(start, end) + 1).attributes.add('checked', lastChecked.checked);
+  //     }
+  // };
+
+  // checkboxes.forEach(checkbox => checkbox.onclick = addCheckmark);
 </script>
 </body>
 </html>
