@@ -46,6 +46,7 @@
 <script>
   // TODO: Sort the array without articles like "An, The", then put them into the HTML with articles
   const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+  let bandsList = document.querySelector('#bands');
 
   console.table(bands);
 
@@ -87,6 +88,10 @@
 
       return bSanitizedBand > aSanitizedBand ? -1 : 1;
   });
+
+  bandsList.innerHTML = bands.map((band, i) => {
+      return `<li>${band}</li>`;
+  }).join('');
 
   console.table(bands);
 
