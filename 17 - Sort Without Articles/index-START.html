@@ -45,56 +45,55 @@
 
 <script>
   // TODO: Sort the array without articles like "An, The", then put them into the HTML with articles
+  // First attempt.... needs compression and DRY applied to article filtering
   const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
-  let bandsList = document.querySelector('#bands');
+  // let bandsList = document.querySelector('#bands');
+  //
+  // const sanitizedBands = bands.sort((firstBand, nextBand) => {
+  //     let firstBandKey, nextBandKey, aArticle, aSanitizedBand, bArticle, bSanitizedBand;
+  //
+  //     if (firstBand.startsWith('An')) {
+  //         firstBandKey = 'An ';
+  //     } else if (firstBand.startsWith('A ')) {
+  //         firstBandKey = 'A ';
+  //     } else if (firstBand.startsWith('The ')) {
+  //         firstBandKey = 'The ';
+  //     }
+  //
+  //     if (firstBandKey) {
+  //         [aArticle, aSanitizedBand] = firstBand.split(firstBandKey);
+  //     } else {
+  //         [aArticle, aSanitizedBand] = [undefined, firstBand];
+  //     }
+  //
+  //     if (nextBand.startsWith('An')) {
+  //         nextBandKey = 'An ';
+  //     } else if (nextBand.startsWith('A ')) {
+  //         nextBandKey = 'A ';
+  //     } else if (nextBand.startsWith('The ')) {
+  //         nextBandKey = 'The ';
+  //     }
+  //
+  //     if (nextBandKey) {
+  //         [bArticle, bSanitizedBand] = nextBand.split(nextBandKey);
+  //     } else {
+  //         [bArticle, bSanitizedBand] = [undefined, nextBand];
+  //     }
+  //
+  //     return bSanitizedBand > aSanitizedBand ? -1 : 1;
+  // });
+  //
+  // bandsList.innerHTML = bands.map((band, i) => {
+  //     return `<li>${band}</li>`;
+  // }).join('');
 
-  console.table(bands);
+  function strip(bandName) {
+      return bandName.replace(/^(a |the |an )/i, '').trim();
+  }
 
-  const sanitizedBands = bands.sort((firstBand, nextBand) => {
-      let firstBandKey, nextBandKey, aArticle, aSanitizedBand, bArticle, bSanitizedBand;
+  const sortedBands = bands.sort((a, b) => strip(a) > strip(b) ? 1 : -1);
 
-      if (firstBand.startsWith('An')) {
-          firstBandKey = 'An ';
-      } else if (firstBand.startsWith('A ')) {
-          firstBandKey = 'A ';
-      } else if (firstBand.startsWith('The ')) {
-          firstBandKey = 'The ';
-      }
-
-      if (firstBandKey) {
-          [aArticle, aSanitizedBand] = firstBand.split(firstBandKey);
-      } else {
-          [aArticle, aSanitizedBand] = [undefined, firstBand];
-      }
-
-      if (nextBand.startsWith('An')) {
-          nextBandKey = 'An ';
-      } else if (nextBand.startsWith('A ')) {
-          nextBandKey = 'A ';
-      } else if (nextBand.startsWith('The ')) {
-          nextBandKey = 'The ';
-      }
-
-      if (nextBandKey) {
-          [bArticle, bSanitizedBand] = nextBand.split(nextBandKey);
-      } else {
-          [bArticle, bSanitizedBand] = [undefined, nextBand];
-      }
-      
-      console.log('firstBand: ' + firstBand, 'firstBandKey: ' + firstBandKey);
-      console.log('aArticle: ' + aArticle, 'aSanitizedBand: ' + aSanitizedBand);
-      console.log('nextBand: ' + nextBand, 'nextBandKey: ' + nextBandKey);
-      console.log('bArticle: ' + bArticle, 'bSanitizedBand: ' + bSanitizedBand);
-
-      return bSanitizedBand > aSanitizedBand ? -1 : 1;
-  });
-
-  bandsList.innerHTML = bands.map((band, i) => {
-      return `<li>${band}</li>`;
-  }).join('');
-
-  console.table(bands);
-
+  document.querySelector('#bands').innerHTML = sortedBands.map(band => `<li>${band}</li>`).join('');
 
 </script>
 
